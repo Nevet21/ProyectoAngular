@@ -1,0 +1,57 @@
+<!-- src/app/test-services/test-services.component.html -->
+
+<mat-tab-group>
+  <!-- Usuarios -->
+  <mat-tab label="Usuarios">
+    <div class="p-4">
+      <button mat-raised-button color="primary" (click)="loadUsers()">Recargar Usuarios</button>
+      <table mat-table [dataSource]="users" class="mat-elevation-z8 mt-4" *ngIf="users.length">
+
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="userDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: userDisplayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-tab>
+
+  <!-- Roles -->
+  <mat-tab label="Roles">
+    <div class="p-4">
+      <button mat-raised-button color="accent" (click)="loadRoles()">Recargar Roles</button>
+      <table mat-table [dataSource]="roles" class="mat-elevation-z8 mt-4" *ngIf="roles.length">
+
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let role">{{ role.id }}</td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let role">{{ role.name }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="roleDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: roleDisplayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-tab>
+</mat-tab-group>
