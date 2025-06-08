@@ -1,0 +1,48 @@
+<div class="entity-table-container">
+  <div class="table-header">
+    <h2>{{ title }}</h2>
+    
+    <button *ngIf="showCreateButton && createRoute" 
+            mat-raised-button 
+            color="primary"
+            (click)="navigateToCreate()"
+            class="create-button">
+      <mat-icon>add</mat-icon>
+      {{ createLabel }}
+    </button>
+  </div>
+
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8 compact-table">
+    <!-- Dynamic Columns -->
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+      <mat-header-cell *matHeaderCellDef class="compact-header">{{ getColumnLabel(column) }}</mat-header-cell>
+      <mat-cell *matCellDef="let row" class="compact-cell">{{ row[column] }}</mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="compact-header">Actions</mat-header-cell>
+      <mat-cell *matCellDef="let row" class="compact-cell">
+        <div class="inline-actions">
+          <ng-container *ngFor="let action of actions">
+            <button mat-button 
+                    [color]="getActionColor(action)"
+                    (click)="performAction(action, row)"
+                    [matTooltip]="action.tooltip || action.label"
+                    class="action-button">
+              <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+              <span *ngIf="!action.icon">{{ action.label }}</span>
+            </button>
+          </ng-container>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns.concat(['actions'])"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns.concat(['actions'])"></mat-row>
+  </mat-table>
+
+  <div *ngIf="loading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+</div>

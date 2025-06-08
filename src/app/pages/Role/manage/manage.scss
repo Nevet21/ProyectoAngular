@@ -1,0 +1,16 @@
+.role-manage-container {
+  max-width: 600px;
+  margin: 20px auto;
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+  }
+}

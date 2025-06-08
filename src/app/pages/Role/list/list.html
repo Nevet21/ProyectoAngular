@@ -1,0 +1,13 @@
+<div class="role-list-container">
+  <entity-table
+    [title]="'Roles'"
+    [createRoute]="'/role/manage/new'"
+    [displayedColumns]="displayedColumns"
+    [columnsLabels]="columnsLabels"
+    [dataSource]="roles"
+    [actions]="actions"
+    [loading]="isLoading"
+    [showCreateButton]="true"
+    createLabel="Crear Nuevo Rol"
+  ></entity-table>
+</div>

@@ -1,0 +1,59 @@
+.address-container {
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  mat-card {
+    padding: 16px;
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .error-message {
+    color: #f44336;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .address-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .form-actions {
+      grid-column: span 2;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 16px;
+    }
+  }
+
+  .address-details {
+    div {
+      margin-bottom: 12px;
+    }
+
+    .edit-button {
+      margin-top: 24px;
+    }
+  }
+
+  .no-address {
+    text-align: center;
+    padding: 24px;
+
+    p {
+      margin-bottom: 16px;
+    }
+  }
+}

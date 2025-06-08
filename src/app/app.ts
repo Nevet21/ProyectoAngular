@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { TestServices } from "./test-services/test-services";
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Sidebar } from "./components/side-bar/side-bar";
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TestServices],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    Sidebar
+],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'ProyectoAngular';
+  title = 'ProyectoAngular';
 }

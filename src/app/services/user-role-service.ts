@@ -11,23 +11,23 @@ export class UserRoleService {
   constructor(private http: HttpClient) {}
 
   list(): Observable<UserRole[]> {
-    return this.http.get<UserRole[]>(`${enviroment.url_ms_security}/api/user-roles`);
+    return this.http.get<UserRole[]>(`${enviroment.url_ms_security}/user-roles`);
   }
 
   view(id: string): Observable<UserRole> {
-    return this.http.get<UserRole>(`${enviroment.url_ms_security}/api/user-roles/${id}`);
+    return this.http.get<UserRole>(`${enviroment.url_ms_security}/user-roles/${id}`);
   }
 
   create(newUserRole: UserRole): Observable<UserRole> {
     delete newUserRole.id;
-    return this.http.post<UserRole>(`${enviroment.url_ms_security}/api/user-roles`, newUserRole);
+    return this.http.post<UserRole>(`${enviroment.url_ms_security}/user-roles`, newUserRole);
   }
 
   update(userRole: UserRole): Observable<UserRole> {
-    return this.http.put<UserRole>(`${enviroment.url_ms_security}/api/user-roles/${userRole.id}`, userRole);
+    return this.http.put<UserRole>(`${enviroment.url_ms_security}/user-roles/${userRole.id}`, userRole);
   }
 
   delete(id: string): Observable<UserRole> {
-    return this.http.delete<UserRole>(`${enviroment.url_ms_security}/api/user-roles/${id}`);
+    return this.http.delete<UserRole>(`${enviroment.url_ms_security}/user-roles/${id}`);
   }
 }

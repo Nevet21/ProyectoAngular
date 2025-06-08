@@ -1,0 +1,9 @@
+<app-data-table
+  [columns]="['id', 'street', 'number']"
+  [displayedLabels]="['ID', 'Street', 'Number']"
+  [dataSource]="addresses"
+  (view)="onView($event)"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+  (custom)="onCustomAction($event)"
+></app-data-table>

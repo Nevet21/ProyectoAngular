@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngFor="let field of formConfig" class="form-field">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ field.label }}</mat-label>
+      <input 
+        matInput 
+        [type]="field.type" 
+        [formControlName]="field.name" 
+        [readonly]="readonly" 
+        [attr.disabled]="readonly ? true : null"
+      />
+      <mat-error *ngIf="form.get(field.name)?.hasError('required') && !readonly">
+        {{ field.label }} is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <button 
+    mat-raised-button 
+    color="primary" 
+    type="submit" 
+    [disabled]="readonly"
+    *ngIf="!readonly"
+  >
+    {{ submitLabel }}
+  </button>
+</form>

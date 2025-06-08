@@ -1,0 +1,70 @@
+<div class="address-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Dirección de {{userName || 'Usuario'}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{errorMessage}}
+      </div>
+
+      <form *ngIf="isEditing" [formGroup]="addressForm" class="address-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Calle</mat-label>
+          <input matInput formControlName="street" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="number" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Latitud</mat-label>
+          <input matInput type="number" formControlName="latitude">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Longitud</mat-label>
+          <input matInput type="number" formControlName="longitude">
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" (click)="saveAddress()" [disabled]="addressForm.invalid">
+            Guardar
+          </button>
+          <button mat-button *ngIf="address" (click)="cancelEditing()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+
+      <div *ngIf="!isEditing && address" class="address-details">
+        <div><strong>Calle:</strong> {{address.street}}</div>
+        <div><strong>Número:</strong> {{address.number}}</div>
+        <div *ngIf="address.latitude"><strong>Latitud:</strong> {{address.latitude}}</div>
+        <div *ngIf="address.longitude"><strong>Longitud:</strong> {{address.longitude}}</div>
+
+        <div class="edit-button">
+          <button mat-raised-button color="accent" (click)="startEditing()">
+            Editar Dirección
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!isEditing && !address && !isLoading" class="no-address">
+        <p>No hay dirección registrada para este usuario</p>
+        <button mat-raised-button color="primary" (click)="isEditing = true">
+          Crear Dirección
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

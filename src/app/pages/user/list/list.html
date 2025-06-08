@@ -1,0 +1,8 @@
+<entity-table
+  [title]="'Users'"
+  [createRoute]="'/user/manage'"
+  [displayedColumns]="['id', 'name', 'email']"
+  [columnsLabels]="{ id: 'ID', name: 'Nombre', email: 'Correo' }"
+  [dataSource]="users"
+  [actions]="userActions"
+/>

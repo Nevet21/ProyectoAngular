@@ -1,0 +1,14 @@
+mat-nav-list {
+  background-color: #e0e0e0;
+  width: 200px;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+a.mat-list-item {
+  font-weight: bold;
+}
+
+.active-link {
+  background-color: #c0c0c0;
+}
