@@ -79,7 +79,23 @@ export const routes: Routes = [
   ]
 },
 
+{
+  path: 'login',
+  loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
+  title: 'Iniciar sesión'
+}
+,
+
+{
+  path: 'dashboard',
+  loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
+  canActivate: [() => import('./auth/auth-guard').then(m => m.AuthGuard)],
+  title: 'Dashboard'
+},
+
+
   // Redirecciones
   { path: '', redirectTo: '/user/list', pathMatch: 'full' },
   { path: '**', redirectTo: '/user/list' }
+
 ];
