@@ -17,11 +17,16 @@ export class SessionService {
   view(id: string): Observable<Session> {
     return this.http.get<Session>(`${enviroment.url_ms_security}/sessions/${id}`);
   }
+create(newSession: Session): Observable<Session> {
+  const userId = newSession.user_id;
+  delete newSession.id;
+  delete newSession.user_id; // lo quitas del body, ya que va en la URL
+  return this.http.post<Session>(
+    `${enviroment.url_ms_security}/sessions/user/${userId}`,
+    newSession
+  );
+}
 
-  create(newSession: Session): Observable<Session> {
-    delete newSession.id;
-    return this.http.post<Session>(`${enviroment.url_ms_security}/sessions`, newSession);
-  }
 
   update(session: Session): Observable<Session> {
     return this.http.put<Session>(`${enviroment.url_ms_security}/sessions/${session.id}`, session);

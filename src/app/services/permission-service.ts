@@ -4,11 +4,25 @@ import { Observable } from 'rxjs';
 import { enviroment } from '../../enviroments/enviroment';
 import { HttpClient } from '@angular/common/http';
 
+const PERMISSIONS_STORAGE_KEY = 'app_permissions';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionService {
-  constructor(private http: HttpClient) {}
+  private permissions: Permission[] = [];
+
+  constructor(private http: HttpClient) {
+    // Cargar permisos desde sessionStorage al iniciar el servicio
+    const stored = sessionStorage.getItem(PERMISSIONS_STORAGE_KEY);
+    if (stored) {
+      try {
+        this.permissions = JSON.parse(stored);
+      } catch {
+        this.permissions = [];
+      }
+    }
+  }
 
   list(): Observable<Permission[]> {
     return this.http.get<Permission[]>(`${enviroment.url_ms_security}/permissions`);
@@ -29,5 +43,20 @@ export class PermissionService {
 
   delete(id: number): Observable<Permission> {
     return this.http.delete<Permission>(`${enviroment.url_ms_security}/permissions/${id}`);
+  }
+
+  setPermissions(permissions: Permission[]) {
+    this.permissions = permissions;
+    // Guardar en sessionStorage
+    sessionStorage.setItem(PERMISSIONS_STORAGE_KEY, JSON.stringify(permissions));
+  }
+
+  getPermissions(): Permission[] {
+    return this.permissions;
+  }
+
+  clearPermissions() {
+    this.permissions = [];
+    sessionStorage.removeItem(PERMISSIONS_STORAGE_KEY);
   }
 }

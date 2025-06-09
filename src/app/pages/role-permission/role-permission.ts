@@ -6,7 +6,8 @@ import { RolePermissionService } from '../../services/role-permission-service';
 import { ActivatedRoute } from '@angular/router';
 import { Permission } from '../../models/permission';
 import { RolePermission } from '../../models/role-permission';
-
+import { Role } from '../../models/role';
+import { RoleService } from '../../services/role-service';
 @Component({
   selector: 'app-role-permissions',
   standalone: true,
@@ -17,7 +18,8 @@ import { RolePermission } from '../../models/role-permission';
 export class RolePermissions {
   private service = inject(RolePermissionService);
   private route = inject(ActivatedRoute);
-
+  role = signal<Role | null>(null); // ✅ Usamos `signal` para estado reactivo
+  private roleService= inject(RoleService)
   roleId = Number(this.route.snapshot.paramMap.get('roleId'));
 
   // Estado reactivo
@@ -27,39 +29,26 @@ export class RolePermissions {
   displayedColumns = ['entity', 'GET', 'POST', 'PUT', 'DELETE'];
 
   ngOnInit() {
-    this.loadRolePermissions();
-  }
+  this.loadRolePermissions();
+}
 
-  loadRolePermissions() {
-    this.service.getByRoleId(this.roleId).subscribe(rps => {
-      this.rolePermissions.set(rps);
-    });
+loadRolePermissions() {
+  // Cargar permisos asignados al rol
+  this.service.getByRoleId(this.roleId).subscribe(rps => {
+    this.rolePermissions.set(rps);
+  });
 
-    // Este endpoint debería traer todos los permisos posibles, organizados por entidad
-    // Asumimos que tú ya tienes este arreglo agrupado (PermissionGroup[])
-    // Si no, dime y te ayudo a agruparlos desde un arreglo plano.
-    // Por ahora usamos un mock temporal
-    this.permissions.set([
-      {
-        entity: 'users',
-        permissions: [
-          { id: 1, entity: 'users', method: 'GET' },
-          { id: 2, entity: 'users', method: 'POST' },
-          { id: 3, entity: 'users', method: 'PUT' },
-          { id: 4, entity: 'users', method: 'DELETE' }
-        ]
-      },
-      {
-        entity: 'roles',
-        permissions: [
-          { id: 5, entity: 'roles', method: 'GET' },
-          { id: 6, entity: 'roles', method: 'POST' },
-          { id: 7, entity: 'roles', method: 'PUT' },
-          { id: 8, entity: 'roles', method: 'DELETE' }
-        ]
-      }
-    ]);
-  }
+  this.roleService.view(this.roleId).subscribe(role => {
+  this.role.set(role);
+});
+
+
+  // ✅ Cargar permisos agrupados desde el backend
+  this.service.getGroupedPermissionsByRoleId(this.roleId).subscribe(groups => {
+    this.permissions.set(groups);
+  });
+}
+
 
   togglePermission(permission: Permission, checked: boolean) {
     if (checked) {

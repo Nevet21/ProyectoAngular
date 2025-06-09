@@ -1,3 +1,5 @@
+<h2 *ngIf="role() as currentRole">Permisos del rol: {{ currentRole.name }}</h2>
+
 <table mat-table [dataSource]="permissions()">
   <!-- Entity name -->
   <ng-container matColumnDef="entity">
