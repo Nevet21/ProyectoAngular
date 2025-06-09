@@ -1,0 +1,9 @@
+<div class="dashboard">
+  <h2>Bienvenido</h2>
+  <div *ngIf="user$ | async as user">
+    <p>Nombre: {{ user.name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <img [src]="user.photoUrl" alt="Foto del usuario" width="100" />
+    <button (click)="logout()">Cerrar sesión</button>
+  </div>
+</div>
