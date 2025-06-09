@@ -48,14 +48,21 @@ export class EntityTableComponent {
   getColumnLabel(column: string): string {
     return this.columnsLabels[column] || column;
   }
+  ngOnInit() {
+  console.log('🛠️ createRoute en ngOnInit:', this.createRoute);
+}
 
-  performAction(action: EntityAction, row: any): void {
-    if (action.action) {
-      action.action(row);
-    } else if (action.route) {
-      this.router.navigate([action.route(row)]);
-    }
+
+performAction(action: EntityAction, row: any): void {
+  console.log('performAction called', action, row);
+  if (action.action) {
+    action.action(row);
+  } else if (action.route) {
+    this.router.navigate([action.route(row)]);
   }
+}
+
+
 
   getActionColor(action: EntityAction): string {
     if (action.color) return action.color;
@@ -63,8 +70,10 @@ export class EntityTableComponent {
   }
 
   navigateToCreate(): void {
-    if (this.createRoute) {
-      this.router.navigate([this.createRoute]);
-    }
+  console.log('➡️ Navegando a:', this.createRoute);
+  if (this.createRoute) {
+    this.router.navigate([this.createRoute]);
   }
+}
+
 }

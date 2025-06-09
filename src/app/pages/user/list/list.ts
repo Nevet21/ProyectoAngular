@@ -22,7 +22,7 @@ export class List implements OnInit {
 
   userActions = [
     { label: 'View', route: (row: any) => `/user/view/${row.id}` },
-    { label: 'Update', route: (row: any) => `/user/manage/${row.id}` },
+    { label: 'Update', route: (row: any) => `/user/edit/${row.id}` },
     {
       label: 'Delete',
       action: (row: any) => this.delete(row.id),
@@ -51,11 +51,11 @@ export class List implements OnInit {
   }
 
   create() {
-    this.router.navigate(['user/manage']);
+    this.router.navigate(['/user/create']);
   }
 
   edit(id: number) {
-    this.router.navigate(['user/manage', id]);
+    this.router.navigate(['user/edit', id]);
   }
 
   view(id: number) {

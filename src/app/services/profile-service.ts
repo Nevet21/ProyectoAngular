@@ -8,26 +8,51 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProfileService {
+  private baseUrl = `${enviroment.url_ms_security}/profiles`;
+
   constructor(private http: HttpClient) {}
 
+  /** Lista todos los perfiles */
   list(): Observable<Profile[]> {
-    return this.http.get<Profile[]>(`${enviroment.url_ms_security}/profiles`);
+    return this.http.get<Profile[]>(this.baseUrl);
   }
 
+  /** Ver perfil por ID */
   view(id: number): Observable<Profile> {
-    return this.http.get<Profile>(`${enviroment.url_ms_security}/profiles/${id}`);
+    return this.http.get<Profile>(`${this.baseUrl}/${id}`);
   }
 
-  create(newProfile: Profile): Observable<Profile> {
-    delete newProfile.id;
-    return this.http.post<Profile>(`${enviroment.url_ms_security}/profiles`, newProfile);
+  /** Ver perfil por ID de usuario */
+  viewByUser(userId: number): Observable<Profile> {
+    return this.http.get<Profile>(`${this.baseUrl}/user/${userId}`);
   }
 
-  update(profile: Profile): Observable<Profile> {
-    return this.http.put<Profile>(`${enviroment.url_ms_security}/profiles/${profile.id}`, profile);
+  /** Crear perfil (requiere FormData y userId en la URL) */
+  create(userId: number, data: { phone: string; photo?: File }): Observable<Profile> {
+    const formData = new FormData();
+    formData.append('phone', data.phone);
+    if (data.photo) {
+      formData.append('photo', data.photo);
+    }
+
+    return this.http.post<Profile>(`${this.baseUrl}/user/${userId}`, formData);
   }
 
-  delete(id: number): Observable<Profile> {
-    return this.http.delete<Profile>(`${enviroment.url_ms_security}/profiles/${id}`);
+  /** Actualizar perfil (requiere FormData) */
+  update(profileId: number, data: { phone?: string; photo?: File }): Observable<Profile> {
+    const formData = new FormData();
+    if (data.phone) {
+      formData.append('phone', data.phone);
+    }
+    if (data.photo) {
+      formData.append('photo', data.photo);
+    }
+
+    return this.http.put<Profile>(`${this.baseUrl}/${profileId}`, formData);
+  }
+
+  /** Eliminar perfil */
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }

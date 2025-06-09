@@ -18,16 +18,32 @@ export class RolePermissionService {
     return this.http.get<RolePermission>(`${enviroment.url_ms_security}/role-permissions/${id}`);
   }
 
-  create(newRP: RolePermission): Observable<RolePermission> {
-    delete newRP.id;
-    return this.http.post<RolePermission>(`${enviroment.url_ms_security}/role-permissions`, newRP);
+  // Usa los IDs como en el backend: /role-permissions/role/:role_id/permission/:permission_id
+  create(roleId: number, permissionId: number): Observable<RolePermission> {
+    return this.http.post<RolePermission>(
+      `${enviroment.url_ms_security}/role-permissions/role/${roleId}/permission/${permissionId}`,
+      {} // Si el backend no espera data en el body
+    );
   }
 
-  update(rp: RolePermission): Observable<RolePermission> {
-    return this.http.put<RolePermission>(`${enviroment.url_ms_security}/role-permissions/${rp.id}`, rp);
+  // Elimina usando role_id y permission_id
+  delete(roleId: number, permissionId: number): Observable<any> {
+    return this.http.delete(
+      `${enviroment.url_ms_security}/role-permissions/role/${roleId}/permission/${permissionId}`
+    );
   }
 
-  delete(id: string): Observable<RolePermission> {
-    return this.http.delete<RolePermission>(`${enviroment.url_ms_security}/role-permissions/${id}`);
+  // Opcional: listar permisos de un rol
+  getByRoleId(roleId: number): Observable<RolePermission[]> {
+    return this.http.get<RolePermission[]>(
+      `${enviroment.url_ms_security}/role-permissions/role/${roleId}`
+    );
+  }
+
+  // Opcional: listar roles que tienen un permiso
+  getByPermissionId(permissionId: number): Observable<RolePermission[]> {
+    return this.http.get<RolePermission[]>(
+      `${enviroment.url_ms_security}/role-permissions/permission/${permissionId}`
+    );
   }
 }

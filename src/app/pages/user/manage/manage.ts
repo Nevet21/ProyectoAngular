@@ -56,6 +56,7 @@ export class Manage implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     const id = this.route.snapshot.params['id'];
     const path = this.route.snapshot.routeConfig?.path;
 
@@ -72,18 +73,20 @@ export class Manage implements OnInit {
     this.updateFormConfig();
 
     // Cargar datos si corresponde
-    if (id && this.mode !== 'create') {
-      this.userService.view(id).subscribe({
-        next: (user) => {
-          this.initialData = user;
-        },
-        error: (err) => console.error(err)
-      });
-    }
+ if (id && this.mode !== 'create') {
+  this.userService.view(id).subscribe({
+    next: (user) => {
+      this.initialData = user;
+    },
+    error: (err) => console.error(err)
+  });
+}
+
   }
 
   onSubmit(formValue: User) {
     const navigationPath = '/user/list';
+    console.log('Submit triggered with value:', formValue);
 
     if (this.mode === 'create') {
       this.userService.create(formValue).subscribe({

@@ -23,20 +23,30 @@ export class RoleListComponent {
   displayedColumns = ['id', 'name', 'description'];
   columnsLabels = { id: 'ID', name: 'Nombre', description: 'Descripción' };
   
-  actions: EntityAction[] = [
-    { label: 'Editar', route: (row) => `/role/manage/${row.id}`, color: 'primary', icon: 'edit' },
-    { 
-      label: 'Eliminar', 
-      action: (row) => this.deleteRole(row.id), 
-      isDelete: true,
-      icon: 'delete' 
-    },
-    { 
-      label: 'Permisos', 
-      route: (row) => `/role/${row.id}/permissions`,
-      icon: 'lock' 
-    }
-  ];
+actions: EntityAction[] = [
+  { 
+    label: 'Editar', 
+    route: (row) => `/role/manage/${row.id}`, 
+    color: 'primary', 
+    icon: 'edit' 
+  },
+  { 
+    label: 'Eliminar', 
+    action: (row) => this.deleteRole(row.id), 
+    isDelete: true, 
+    icon: 'delete' 
+  },
+  { 
+    label: 'Permisos', 
+    route: (row) => `/permissions/role/${row.id}`, 
+    icon: 'lock' 
+  },
+  {
+    label: 'ListarUsers',
+    icon: 'group', // puedes cambiarlo por otro como 'people' si lo prefieres
+    route: (row) => `/user-role/list/${row.id}`
+  }
+];
 
   constructor(
     private roleService: RoleService,

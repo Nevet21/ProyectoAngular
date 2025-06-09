@@ -18,16 +18,33 @@ export class DigitalSignatureService {
     return this.http.get<DigitalSignature>(`${enviroment.url_ms_security}/digital-signatures/${id}`);
   }
 
-  create(newSignature: DigitalSignature): Observable<DigitalSignature> {
-    delete newSignature.id;
-    return this.http.post<DigitalSignature>(`${enviroment.url_ms_security}/digital-signatures`, newSignature);
-  }
+create(userId: number, photo: File): Observable<DigitalSignature> {
+  const formData = new FormData();
+  formData.append('photo', photo);
 
-  update(signature: DigitalSignature): Observable<DigitalSignature> {
-    return this.http.put<DigitalSignature>(`${enviroment.url_ms_security}/digital-signatures/${signature.id}`, signature);
-  }
+  return this.http.post<DigitalSignature>(
+    `${enviroment.url_ms_security}/digital-signatures/user/${userId}`,
+    formData
+  );
+}
+
+
+updateFormData(signatureId: number, photo: File): Observable<DigitalSignature> {
+  const formData = new FormData();
+  formData.append('photo', photo);
+
+  return this.http.put<DigitalSignature>(
+    `${enviroment.url_ms_security}/digital-signatures/${signatureId}`,
+    formData
+  );
+}
+
 
   delete(id: number): Observable<DigitalSignature> {
     return this.http.delete<DigitalSignature>(`${enviroment.url_ms_security}/digital-signatures/${id}`);
   }
+  getByUserId(userId: number): Observable<DigitalSignature> {
+  return this.http.get<DigitalSignature>(`${enviroment.url_ms_security}/digital-signatures/user/${userId}`);
+}
+
 }

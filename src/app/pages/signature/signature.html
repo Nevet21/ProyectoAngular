@@ -1,0 +1,34 @@
+<mat-card *ngIf="user" class="signature-card">
+  <mat-card-header>
+    <mat-card-title>{{ user.name }} - Signature</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="signature; else uploadBlock" class="signature-content">
+      <img 
+        [src]="signatureImageUrl" 
+        alt="Digital Signature" 
+        class="signature-image"
+      />
+
+      <div class="signature-info">
+        <div><span class="label">Name:</span> {{ user.name }}</div>
+        <div><span class="label">Email:</span> {{ user.email }}</div>
+        <div><span class="label">Created:</span> {{ signature.created_at | date:'medium' }}</div>
+      </div>
+
+      <!-- 🔽 Botón para ir a la pantalla de actualización -->
+      <button mat-stroked-button color="accent" [routerLink]="['/signature/update', signature.id]">
+        Actualizar Firma
+      </button>
+    </div>
+
+    <ng-template #uploadBlock>
+      <p>This user has no signature yet.</p>
+      <input type="file" (change)="onFileSelected($event)" />
+      <button mat-raised-button color="primary" (click)="createSignature()" [disabled]="!selectedFile">
+        Upload Signature
+      </button>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

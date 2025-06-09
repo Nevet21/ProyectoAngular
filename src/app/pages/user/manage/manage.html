@@ -1,12 +1,18 @@
-<!-- Cambia las comparaciones numéricas por los literales -->
-<h2 *ngIf="mode === 'view'">View User</h2>
-<h2 *ngIf="mode === 'create'">Create User</h2>
-<h2 *ngIf="mode === 'edit'">Update User</h2>
+<ng-container *ngIf="mode === 'create' || initialData?.id">
+  <h2 *ngIf="mode === 'view'">View User</h2>
+  <h2 *ngIf="mode === 'create'">Create User</h2>
+  <h2 *ngIf="mode === 'edit'">Update User</h2>
 
-<app-dynamic-form
-  [formConfig]="formConfig"
-  [initialData]="initialData"
-  [submitLabel]="submitLabel"
-  [readonly]="mode === 'view'"
-  (submitForm)="onSubmit($event)"
-></app-dynamic-form>
+  <app-dynamic-form
+    [formConfig]="formConfig"
+    [initialData]="initialData"
+    [submitLabel]="submitLabel"
+    [readonly]="mode === 'view'"
+    (submitForm)="onSubmit($event)"
+  ></app-dynamic-form>
+</ng-container>
+
+<!-- Alternativamente puedes mostrar un loader -->
+<ng-container *ngIf="mode !== 'create' && !initialData?.id">
+  <p>Cargando usuario...</p>
+</ng-container>

@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  padding: 20px;
+  width: 400px;
+  background: white;
+  border-radius: 8px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.content {
+  margin: 20px 0;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  mat-select {
+    width: 100%;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

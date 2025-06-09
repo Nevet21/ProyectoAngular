@@ -1,0 +1,47 @@
+.signature-card {
+  .signature-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 16px;
+
+    // Tablets y móviles: apilar contenido
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .signature-image {
+    max-width: 300px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    // Móviles pequeños: reducir un poco más
+    @media (max-width: 480px) {
+      max-width: 220px;
+    }
+  }
+
+  .signature-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 16px;
+
+    .label {
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      align-items: center;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
+  }
+}

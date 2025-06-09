@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <span>{{ user?.name }} - Signature</span>
+</mat-toolbar>
+
+<div class="layout">
+  <mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav-content>
+      <div class="content" style="margin-top: 3rem;"> <!-- MÁS ARRIBA -->
+        <mat-card class="upload-card">
+          <mat-card-title>Upload Signature</mat-card-title>
+
+          <div class="form-section">
+            <label for="photo">Photo:</label>
+            <input type="file" (change)="onFileSelected($event)" />
+          </div>
+
+          <button mat-raised-button color="primary" (click)="onUpdate()">Update</button>
+        </mat-card>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

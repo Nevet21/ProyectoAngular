@@ -1,0 +1,82 @@
+<mat-card class="profile-card" *ngIf="!loading">
+  <mat-card-title>
+    <div class="title-container">
+      <div class="user-name">{{ user?.name || 'Usuario' }} — Perfil</div>
+      
+    </div>
+    <div><div class="user-email">{{ user?.email }} — Email</div></div>
+  </mat-card-title>
+
+  <div *ngIf="isCreating; else existingProfile" class="no-profile-message">
+    <p>No tienes perfil aún.</p>
+  </div>
+
+  <ng-template #existingProfile>
+    <div class="preview" *ngIf="photoPreviewUrl">
+      <img
+        [src]="photoPreviewUrl"
+        alt="Foto de perfil"
+        class="profile-image"
+      />
+    </div>
+  </ng-template>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="profile-form">
+    <!-- Campo Foto -->
+    <div class="form-group">
+      <label for="photo-upload"><strong>Foto:</strong></label>
+      <input
+        id="photo-upload"
+        type="file"
+        (change)="onFileSelected($event)"
+        [disabled]="!isEditing"
+      />
+      <mat-error
+        *ngIf="form.get('photo')?.hasError('required') && form.get('photo')?.touched"
+      >
+        La foto es obligatoria.
+      </mat-error>
+    </div>
+
+    <!-- Campo Teléfono -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input
+        matInput
+        formControlName="phone"
+        placeholder="Ej: 3001234567"
+        inputmode="numeric"
+        [disabled]="!isEditing"
+      />
+      <mat-error *ngIf="form.get('phone')?.hasError('required') && form.get('phone')?.touched">
+        El teléfono es obligatorio.
+      </mat-error>
+      <mat-error *ngIf="form.get('phone')?.hasError('pattern') && form.get('phone')?.touched">
+        El número debe contener solo dígitos y no ser negativo.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Botones -->
+    <div class="button-group">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        *ngIf="!isEditing"
+        (click)="enableEdit()"
+      >
+        Actualizar
+      </button>
+
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        *ngIf="isEditing"
+        [disabled]="form.invalid"
+      >
+        {{ isCreating ? 'Crear Perfil' : 'Enviar' }}
+      </button>
+    </div>
+  </form>
+</mat-card>

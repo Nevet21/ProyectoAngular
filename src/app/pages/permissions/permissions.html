@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="header">
+    <h2>Permissions</h2>
+    <button mat-raised-button color="primary" (click)="create()">
+      <mat-icon>add</mat-icon> Create
+    </button>
+  </div>
+
+  <table class="permissions-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>URL</th>
+        <th>Method</th>
+        <th>Entity</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of permissions">
+        <td>{{ p.id }}</td>
+        <td>{{ p.url }}</td>
+        <td>{{ p.method }}</td>
+        <td>{{ p.entity }}</td>
+        <td class="actions">
+<button mat-button color="accent" (click)="p.id && view(p.id)">View</button>
+<button mat-button color="warn" (click)="p.id && update(p.id)">Update</button>
+<button mat-button color="warn" (click)="p.id && delete(p.id)">Delete</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

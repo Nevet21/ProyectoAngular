@@ -1,0 +1,22 @@
+<table mat-table [dataSource]="permissions()">
+  <!-- Entity name -->
+  <ng-container matColumnDef="entity">
+    <th mat-header-cell *matHeaderCellDef> Entidad </th>
+    <td mat-cell *matCellDef="let group"> {{ group.entity }} </td>
+  </ng-container>
+
+  <!-- Métodos GET, POST, etc -->
+  <ng-container *ngFor="let method of ['GET', 'POST', 'PUT', 'DELETE']" [matColumnDef]="method">
+    <th mat-header-cell *matHeaderCellDef> {{ method }} </th>
+    <td mat-cell *matCellDef="let group">
+      <mat-checkbox
+        *ngIf="hasMethod(group, method) as perm"
+        [checked]="isChecked(perm.id!)"
+        (change)="togglePermission(perm, $event.checked)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

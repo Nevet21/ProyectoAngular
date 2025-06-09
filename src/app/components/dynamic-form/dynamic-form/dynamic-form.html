@@ -9,8 +9,30 @@
         [readonly]="readonly" 
         [attr.disabled]="readonly ? true : null"
       />
+
+      <!-- Campo requerido -->
       <mat-error *ngIf="form.get(field.name)?.hasError('required') && !readonly">
         {{ field.label }} is required
+      </mat-error>
+
+      <!-- Email inválido -->
+      <mat-error *ngIf="form.get(field.name)?.hasError('email') && !readonly">
+        Please enter a valid email address
+      </mat-error>
+
+      <!-- Número menor al mínimo -->
+      <mat-error *ngIf="form.get(field.name)?.hasError('min') && !readonly">
+        Value must be at least {{ field.min }}
+      </mat-error>
+
+      <!-- Número mayor al máximo -->
+      <mat-error *ngIf="form.get(field.name)?.hasError('max') && !readonly">
+        Value must be at most {{ field.max }}
+      </mat-error>
+
+      <!-- Patrón inválido -->
+      <mat-error *ngIf="form.get(field.name)?.hasError('pattern') && !readonly">
+        Invalid format
       </mat-error>
     </mat-form-field>
   </div>

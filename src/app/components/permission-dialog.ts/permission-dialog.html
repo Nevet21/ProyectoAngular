@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ editable ? 'Update' : 'View' }} Permission</h2>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>URL</mat-label>
+    <input matInput [(ngModel)]="permission.url" [readonly]="!editable" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Method</mat-label>
+    <ng-container *ngIf="editable; else viewOnlyMethod">
+      <mat-select [(ngModel)]="permission.method">
+        <mat-option *ngFor="let method of httpMethods" [value]="method">
+          {{ method }}
+        </mat-option>
+      </mat-select>
+    </ng-container>
+    <ng-template #viewOnlyMethod>
+      <input matInput [value]="permission.method" readonly />
+    </ng-template>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Entity</mat-label>
+    <ng-container *ngIf="editable; else viewOnlyEntity">
+      <mat-select [(ngModel)]="permission.entity">
+        <mat-option *ngFor="let entity of entities" [value]="entity">
+          {{ entity }}
+        </mat-option>
+      </mat-select>
+    </ng-container>
+    <ng-template #viewOnlyEntity>
+      <input matInput [value]="permission.entity" readonly />
+    </ng-template>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-button color="primary" (click)="save()" *ngIf="editable">Save</button>
+</div>

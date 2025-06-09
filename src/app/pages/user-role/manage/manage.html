@@ -1,0 +1,40 @@
+<div *ngIf="isLoading" class="text-center my-4">Cargando...</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+<h2>Asignar usuario al rol</h2>
+<app-dynamic-form
+  [formConfig]="formConfig"
+  [submitLabel]="'Asignar'"
+  (submitForm)="onSubmitForm($event)">
+</app-dynamic-form>
+
+<h3 class="mt-4">Usuarios asignados</h3>
+<table *ngIf="!isLoading && assignedRoles.length > 0" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Desde</th>
+      <th>Hasta</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ur of assignedRoles">
+<!-- src/app/pages/user-role/manage/manage.html -->
+    <td>{{ usersMap[ur.user_id].name || 'N/A' }}</td>
+    <td>{{ usersMap[ur.user_id].email || 'N/A' }}</td>
+      <td>{{ ur.startAt | date:'mediumDate' }}</td>
+      <td>{{ ur.endAt ? (ur.endAt | date:'mediumDate') : '-' }}</td>
+      <td>
+        <button *ngIf="ur.id" class="btn btn-sm btn-danger" (click)="removeUserFromRole(ur.id)">Eliminar</button>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!isLoading && assignedRoles.length === 0" class="alert alert-info">
+  No hay usuarios asignados a este rol.
+</div>
